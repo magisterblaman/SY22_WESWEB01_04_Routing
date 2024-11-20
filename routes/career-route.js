@@ -1,6 +1,6 @@
 import http from 'http';
 
-async function handleCareerRoute(pathSegments, request, response) {
+export async function handleCareerRoute(pathSegments, request, response) {
 	// /careers/balblallba/blalbba
 	if (pathSegments.length > 0) {
 		response.writeHead(404, { 'Content-Type': 'text/plain' });
