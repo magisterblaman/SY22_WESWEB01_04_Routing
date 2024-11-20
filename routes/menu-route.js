@@ -1,4 +1,5 @@
 import http from 'http';
+import fs from 'fs/promises';
 
 /**
  * 
@@ -16,17 +17,44 @@ export async function handleMenuRoute(pathSegments, request, response) {
 			response.end();
 			return;
 		}
-		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-		response.write(`
-			<html>
-				<head>
 
-				</head>
-				<body>
-					<h1>Meny</h1>
-				</body>
-			</html>
-		`);
+		let links = [
+			{
+				"link": "/menu/green",
+				"text": "Vegetarisk meny"
+			},
+			{
+				"link": "/menu/meat",
+				"text": "Köttmeny"
+			},
+			{
+				"link": "/menu/dog",
+				"text": "Hundmeny"
+			},
+			{
+				"link": "/menu/fish",
+				"text": "Fiskmeny"
+			}
+		];
+		/*
+
+		<li><a href="green">Vegetarisk meny</a></li>
+		<li><a href="meat">Köttmeny</a></li>
+
+		*/
+
+		let linksString = '';
+		for (let i = 0; i < links.length; i++) {
+			let linkObj = links[i];
+			linksString += '<li><a href="' + linkObj.link + '">' + linkObj.text + '</a></li>';			
+		}
+
+		let template = (await fs.readFile('templates/menu.volvo')).toString();
+
+		template = template.replaceAll('%{menuLinks}%', linksString);
+
+		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+		response.write(template);
 		response.end();
 		return;
 	}
@@ -44,17 +72,14 @@ export async function handleMenuRoute(pathSegments, request, response) {
 			response.end();
 			return;
 		}
-		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-		response.write(`
-			<html>
-				<head>
 
-				</head>
-				<body>
-					<h1>Vegetarisk meny</h1>
-				</body>
-			</html>
-		`);
+		let template = (await fs.readFile('templates/submenu.volvo')).toString();
+
+		template = template.replaceAll('%{menuTitle}%', 'Vegetarisk meny');
+		template = template.replaceAll('%{menuDescription}%', 'Här hittar du vår meny för dig som inte äter kött..........');
+
+		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+		response.write(template);
 		response.end();
 		return;
 	}
@@ -72,17 +97,13 @@ export async function handleMenuRoute(pathSegments, request, response) {
 			response.end();
 			return;
 		}
-		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-		response.write(`
-			<html>
-				<head>
+		let template = (await fs.readFile('templates/submenu.volvo')).toString();
 
-				</head>
-				<body>
-					<h1>Köttmeny</h1>
-				</body>
-			</html>
-		`);
+		template = template.replaceAll('%{menuTitle}%', 'Köttmeny');
+		template = template.replaceAll('%{menuDescription}%', 'KÖTT MMMMMMMM');
+
+		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+		response.write(template);
 		response.end();
 		return;
 	}
@@ -100,17 +121,13 @@ export async function handleMenuRoute(pathSegments, request, response) {
 			response.end();
 			return;
 		}
-		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-		response.write(`
-			<html>
-				<head>
+		let template = (await fs.readFile('templates/submenu.volvo')).toString();
 
-				</head>
-				<body>
-					<h1>Hundmeny</h1>
-				</body>
-			</html>
-		`);
+		template = template.replaceAll('%{menuTitle}%', 'Hundmeny');
+		template = template.replaceAll('%{menuDescription}%', 'Mat för/av hundar');
+
+		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+		response.write(template);
 		response.end();
 		return;
 	}
@@ -128,17 +145,13 @@ export async function handleMenuRoute(pathSegments, request, response) {
 			response.end();
 			return;
 		}
-		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-		response.write(`
-			<html>
-				<head>
+		let template = (await fs.readFile('templates/submenu.volvo')).toString();
 
-				</head>
-				<body>
-					<h1>Fiskmeny</h1>
-				</body>
-			</html>
-		`);
+		template = template.replaceAll('%{menuTitle}%', 'Fiskmeny');
+		template = template.replaceAll('%{menuDescription}%', 'Hmmmmmm luktar bekant');
+
+		response.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+		response.write(template);
 		response.end();
 		return;
 	}
